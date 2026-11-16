@@ -23,10 +23,10 @@ public class FuncionarioEntity {
     @Column(nullable = false, length = 30)
     private String cargo;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false, length = 150, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String telefone;
 
     @Column(nullable = false)

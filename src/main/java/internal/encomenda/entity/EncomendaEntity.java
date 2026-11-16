@@ -52,7 +52,7 @@ public class EncomendaEntity {
     @Column(nullable = false, length = 30)
     private String status;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String observacoes;
 
 
