@@ -1,0 +1,68 @@
+package internal.funcionario.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "funcionarios")
+public class FuncionarioEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id_funcionario;
+
+    @Column(nullable = false, length = 150)
+    private String nome;
+
+    @Column(nullable = false, length = 30)
+    private String cargo;
+
+    @Column(nullable = false, length = 150)
+    private String email;
+
+    @Column(nullable = false, length = 20)
+    private String telefone;
+
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
+    @Column(nullable = false)
+    private LocalDateTime admitido_em;
+
+    public FuncionarioEntity(String nome, String cargo, String email, String telefone) {
+        this.nome = nome;
+        this.cargo = cargo;
+        this.email = email;
+        this.telefone = telefone;
+    }
+
+    public void alterarNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void alterarCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public void alterarEmail(String email) {
+        this.email = email;
+    }
+
+    public void alterarTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+
+    public void ativar() {
+        this.ativo = true;
+    }
+    public void desativar() {
+        this.ativo = false;
+    }
+
+
+}

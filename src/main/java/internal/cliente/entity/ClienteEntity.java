@@ -1,11 +1,13 @@
 package internal.cliente.entity;
 
+import internal.encomenda.entity.EncomendaEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,11 +20,11 @@ public class ClienteEntity {
 
     @Column(nullable = false, length = 150)
     private String nome;
-
-    @Column(nullable = false, length = 11, unique = true)
+    // Tem 14 de tamanho por causa de CNPJ.
+    @Column(nullable = false, length = 14, unique = true)
     private String cpf;
 
-    @Column(nullable = false, length = 11, unique = true)
+    @Column(nullable = false, length = 20, unique = true)
     private String telefone;
 
     @Column(nullable = false, length = 150, unique = true)
@@ -32,21 +34,30 @@ public class ClienteEntity {
     private String endereco;
 
     @Column(nullable = false)
-    private Date criado_em;
+    private LocalDateTime criado_em;
 
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<EncomendaEntity> encomendas;
+
 
     // Contem somente coisas que precisam ser declaradas na criação da entidade
     // então, você não vai encontrar "Ativo" aqui, pq ele já começa ativo.
-    public ClienteEntity(String nome, String cpf, String telefone, String email, String endereco, Date criado_em) {
+    // o date tambem nao esta aqui,
+    // pq eu ACHO que ele ja preenche automaticamente
+    public ClienteEntity(String nome, String cpf, String telefone, String email, String endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
         this.endereco = endereco;
-        this.criado_em = criado_em;
+    }
+
+    public void adicionarEncomenda(EncomendaEntity encomenda) {
+        encomendas.add(encomenda);
+        encomenda.associarCliente(this);
     }
 
     public void alterarNome(String nome) {
