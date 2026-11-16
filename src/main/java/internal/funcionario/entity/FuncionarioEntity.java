@@ -1,10 +1,12 @@
 package internal.funcionario.entity;
 
+import internal.encomenda.entity.EncomendaEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,11 +35,20 @@ public class FuncionarioEntity {
     @Column(nullable = false)
     private LocalDateTime admitido_em;
 
+    @OneToMany(mappedBy = "funcionario")
+    private List<EncomendaEntity> encomendas;
+
+
     public FuncionarioEntity(String nome, String cargo, String email, String telefone) {
         this.nome = nome;
         this.cargo = cargo;
         this.email = email;
         this.telefone = telefone;
+    }
+
+    public void adicionarEncomenda(EncomendaEntity encomenda) {
+        encomendas.add(encomenda);
+        encomenda.associarFuncionario(this);
     }
 
     public void alterarNome(String nome) {

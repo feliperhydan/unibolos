@@ -69,6 +69,10 @@ public class EncomendaEntity {
         this.cliente = cliente;
     }
 
+    public void associarFuncionario(FuncionarioEntity funcionario) {
+        this.funcionario = funcionario;
+    }
+
     public void alterarDados(String descricao, int quantidade, Float valor_total, String status, String observacoes) {
         this.descricao = descricao;
         this.quantidade = quantidade;
