@@ -3,14 +3,17 @@ package internal.encomenda.entity;
 
 import internal.cliente.entity.ClienteEntity;
 import internal.funcionario.entity.FuncionarioEntity;
+import internal.historico.entity.HistoricoEntity;
+import internal.pagamento.entity.PagamentoEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,7 +22,7 @@ import java.util.Date;
 public class EncomendaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_encomenda;
+    private Long id_encomenda;
 
     // id_cliente do uml la
     // acho que nao precisa chamar a variavel de id_cliente
@@ -32,6 +35,12 @@ public class EncomendaEntity {
     @JoinColumn(name = "id_funcionario", nullable = false)
     private FuncionarioEntity funcionario;
 
+    @OneToMany(mappedBy = "encomenda")
+    private List<PagamentoEntity> pagamentos;
+
+    @OneToMany(mappedBy = "encomenda")
+    private List<HistoricoEntity> historicos;
+
     @Column(nullable = false)
     private String descricao;
 
@@ -41,13 +50,13 @@ public class EncomendaEntity {
     // precision fala q tem que ter ate 10 digitos
     // scale é a quant de casas decimais
     @Column(nullable = false, precision = 10, scale = 2)
-    private Float valor_total;
+    private BigDecimal valor_total;
 
     @Column(nullable = false)
     private LocalDateTime data_pedido;
 
     @Column(nullable = false)
-    private LocalDateTime data_entrega;
+    private LocalDate data_entrega;
 
     @Column(nullable = false, length = 30)
     private String status;
@@ -57,7 +66,7 @@ public class EncomendaEntity {
 
 
 
-    public EncomendaEntity(String descricao, int quantidade, Float valor_total, String status, String observacoes) {
+    public EncomendaEntity(String descricao, int quantidade, BigDecimal valor_total, String status, String observacoes) {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.valor_total = valor_total;
@@ -73,7 +82,7 @@ public class EncomendaEntity {
         this.funcionario = funcionario;
     }
 
-    public void alterarDados(String descricao, int quantidade, Float valor_total, String status, String observacoes) {
+    public void alterarDados(String descricao, int quantidade, BigDecimal valor_total, String status, String observacoes) {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.valor_total = valor_total;

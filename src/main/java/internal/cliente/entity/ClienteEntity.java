@@ -16,7 +16,7 @@ import java.util.List;
 public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_cliente;
+    private Long id_cliente;
 
     @Column(nullable = false, length = 150)
     private String nome;

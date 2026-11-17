@@ -15,7 +15,7 @@ import java.util.List;
 public class FuncionarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_funcionario;
+    private Long id_funcionario;
 
     @Column(nullable = false, length = 150)
     private String nome;

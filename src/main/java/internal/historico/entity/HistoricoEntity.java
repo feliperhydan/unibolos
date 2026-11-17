@@ -36,8 +36,18 @@ public class HistoricoEntity {
 
     @Column(nullable = true)
     private String observacao;
-    
+
     @Column(nullable = true)
     private LocalDateTime registrado_em;
+
+    public HistoricoEntity(String status_anterior, String status_novo, String observacao) {
+        this.status_anterior = status_anterior;
+        this.status_novo = status_novo;
+        this.observacao = observacao;
+    }
+
+    public void alterarStatus(String status_novo)  {
+        this.status_novo = status_novo;
+    }
 
 }
