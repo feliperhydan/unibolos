@@ -7,9 +7,12 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uniesp.unibolos.internal.historico.entity.HistoricoEntity;
+import uniesp.unibolos.internal.pagamento.entity.PagamentoEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +30,13 @@ public class EncomendaEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_funcionario", nullable = false)
     private FuncionarioEntity funcionario;
+
+    @OneToMany(mappedBy = "encomenda")
+    private List<PagamentoEntity> pagamentos;
+
+    @OneToMany(mappedBy = "encomenda")
+    private List<HistoricoEntity> historicos;
+
 
     @Column(nullable = false, length = 300, columnDefinition = "TEXT")
     private String descricao;

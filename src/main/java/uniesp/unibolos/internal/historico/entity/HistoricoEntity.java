@@ -49,5 +49,8 @@ public class HistoricoEntity {
         this.observacao = observacao;
         this.registradoEm = LocalDateTime.now();
     }
+    public void alterarStatus(String statusNovo)  {
+        this.statusNovo = statusNovo;
+    }
 
 }
