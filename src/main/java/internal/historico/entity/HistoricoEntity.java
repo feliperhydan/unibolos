@@ -50,4 +50,7 @@ public class HistoricoEntity {
         this.status_novo = status_novo;
     }
 
+    public void associarEncomenda(EncomendaEntity encomenda) {
+        this.encomenda = encomenda;
+    }
 }

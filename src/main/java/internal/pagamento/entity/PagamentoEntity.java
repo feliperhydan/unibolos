@@ -17,7 +17,6 @@ public class PagamentoEntity {
     private Long id_pagamento;
 
 
-    @Setter
     @ManyToOne
     @JoinColumn(name = "id_encomenda")
     private EncomendaEntity encomenda;
@@ -40,4 +39,7 @@ public class PagamentoEntity {
         this.valor = valor;
     }
 
+    public void associarEncomenda(EncomendaEntity encomenda) {
+        this.encomenda = encomenda;
+    }
 }
