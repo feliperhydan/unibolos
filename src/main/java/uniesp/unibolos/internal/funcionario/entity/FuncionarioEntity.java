@@ -1,11 +1,10 @@
-package internal.funcionario.entity;
+package uniesp.unibolos.internal.funcionario.entity;
 
-import internal.encomenda.entity.EncomendaEntity;
+import uniesp.unibolos.internal.encomenda.entity.EncomendaEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.List;
 public class FuncionarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_funcionario;
+    private Long idFuncionario;
 
     @Column(nullable = false, length = 150)
     private String nome;
@@ -30,10 +29,10 @@ public class FuncionarioEntity {
     private String telefone;
 
     @Column(nullable = false)
-    private Boolean ativo = true;
+    private boolean ativo = true;
 
     @Column(nullable = false)
-    private LocalDateTime admitido_em;
+    private LocalDateTime admitidoEm;
 
     @OneToMany(mappedBy = "funcionario")
     private List<EncomendaEntity> encomendas;
@@ -44,6 +43,7 @@ public class FuncionarioEntity {
         this.cargo = cargo;
         this.email = email;
         this.telefone = telefone;
+        this.admitidoEm = LocalDateTime.now();
     }
 
     public void adicionarEncomenda(EncomendaEntity encomenda) {

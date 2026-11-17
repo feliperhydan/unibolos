@@ -1,6 +1,6 @@
-package internal.cliente.entity;
+package uniesp.unibolos.internal.cliente.entity;
 
-import internal.encomenda.entity.EncomendaEntity;
+import uniesp.unibolos.internal.encomenda.entity.EncomendaEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,11 +16,11 @@ import java.util.List;
 public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_cliente;
+    private Long id_cliente;
 
     @Column(nullable = false, length = 150)
     private String nome;
-    // Tem 14 de tamanho por causa de CNPJ.
+
     @Column(nullable = false, length = 14, unique = true)
     private String cpf;
 
@@ -34,25 +34,21 @@ public class ClienteEntity {
     private String endereco;
 
     @Column(nullable = false)
-    private LocalDateTime criado_em;
+    private LocalDateTime criadoEm;
 
     @Column(nullable = false)
-    private Boolean ativo = true;
+    private boolean ativo = true;
 
     @OneToMany(mappedBy = "cliente")
     private List<EncomendaEntity> encomendas;
 
-
-    // Contem somente coisas que precisam ser declaradas na criação da entidade
-    // então, você não vai encontrar "Ativo" aqui, pq ele já começa ativo.
-    // o date tambem nao esta aqui,
-    // pq eu ACHO que ele ja preenche automaticamente
     public ClienteEntity(String nome, String cpf, String telefone, String email, String endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
         this.endereco = endereco;
+        this.criadoEm = LocalDateTime.now();
     }
 
     public void adicionarEncomenda(EncomendaEntity encomenda) {
