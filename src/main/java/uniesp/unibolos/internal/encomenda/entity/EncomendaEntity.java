@@ -37,7 +37,6 @@ public class EncomendaEntity {
     @OneToMany(mappedBy = "encomenda")
     private List<HistoricoEntity> historicos;
 
-
     @Column(nullable = false, length = 300, columnDefinition = "TEXT")
     private String descricao;
 
@@ -78,6 +77,15 @@ public class EncomendaEntity {
         this.funcionario = funcionario;
     }
 
+    public void associarPagamento(PagamentoEntity pagamento) {
+        pagamentos.add(pagamento);
+        pagamento.associarEncomenda(this);
+    }
+
+    public void associarHistorico(HistoricoEntity historico) {
+        historicos.add(historico);
+        historico.associarEncomenda(this);
+    }
     public void alterarDados(String descricao, int quantidade, BigDecimal valor_total, String status, String observacoes) {
         this.descricao = descricao;
         this.quantidade = quantidade;
