@@ -1,5 +1,5 @@
-package uniesp.unibolos.internal.encomenda.entity;
 
+package uniesp.unibolos.internal.encomenda.entity;
 
 import uniesp.unibolos.internal.cliente.entity.ClienteEntity;
 import uniesp.unibolos.internal.funcionario.entity.FuncionarioEntity;
@@ -11,6 +11,7 @@ import uniesp.unibolos.internal.historico.entity.HistoricoEntity;
 import uniesp.unibolos.internal.pagamento.entity.PagamentoEntity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "encomendas")
 public class EncomendaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_encomenda;
@@ -37,7 +39,7 @@ public class EncomendaEntity {
     @OneToMany(mappedBy = "encomenda")
     private List<HistoricoEntity> historicos;
 
-    @Column(nullable = false, length = 300, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
     @Column(nullable = false)
@@ -50,20 +52,20 @@ public class EncomendaEntity {
     private LocalDateTime dataPedido;
 
     @Column(nullable = false)
-    private LocalDateTime dataEntrega;
+    private LocalDate dataEntrega;
 
     @Column(nullable = false, length = 30)
     private String status;
 
-    @Column(length = 300)
+    @Column(columnDefinition = "TEXT")
     private String observacoes;
 
-
-
-    public EncomendaEntity(String descricao, int quantidade, BigDecimal valor_total, String status, String observacoes) {
+    public EncomendaEntity(String descricao, int quantidade, BigDecimal valor_total,
+                           LocalDate dataEntrega, String status, String observacoes) {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.valorTotal = valor_total;
+        this.dataEntrega = dataEntrega;
         this.status = status;
         this.observacoes = observacoes;
         this.dataPedido = LocalDateTime.now();
@@ -86,7 +88,9 @@ public class EncomendaEntity {
         historicos.add(historico);
         historico.associarEncomenda(this);
     }
-    public void alterarDados(String descricao, int quantidade, BigDecimal valor_total, String status, String observacoes) {
+
+    public void alterarDados(String descricao, int quantidade, BigDecimal valor_total,
+                             String status, String observacoes) {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.valorTotal = valor_total;
