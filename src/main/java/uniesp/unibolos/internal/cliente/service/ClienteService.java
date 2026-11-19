@@ -13,6 +13,7 @@ import uniesp.unibolos.internal.cliente.repository.ClienteRepository;
 import uniesp.unibolos.shared.exception.RecursoNaoEncontradoException;
 
 import java.awt.print.Pageable;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,5 +40,12 @@ public class ClienteService {
         ClienteEntity cliente = clienteRepository.findById(id).orElseThrow(() ->
                 new RecursoNaoEncontradoException("Cliente", id));
         cliente.ativar();
+    }
+
+    public List<ClienteResumoResponse> listarClientes() {
+        return clienteRepository.findAllByAtivoTrue()
+                .stream()
+                .map(ClienteMapper::paraResumoResposta)
+                .toList();
     }
 }
